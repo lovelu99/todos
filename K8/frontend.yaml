@@ -4,7 +4,7 @@ metadata:
   name: todo-frontend
   namespace: todo
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: todo-frontend
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: yourrepo/todo-frontend:1.0
+          image: noakhali/todo-frontend:1.0
           ports:
             - containerPort: 80
           readinessProbe:

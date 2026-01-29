@@ -24,7 +24,7 @@ metadata:
   name: todo-backend
   namespace: todo
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: todo-backend
@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: yourrepo/todo-backend:1.0
+          image: noakhali/todo-backend:1.0
           ports:
             - containerPort: 8000
           envFrom:
