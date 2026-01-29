@@ -1,0 +1,42 @@
+sudo dnf update -y
+sudo dnf install -y python3 python3-pip
+sudo dnf install -y mariadb105
+mkdir -p /opt/backend
+cd /opt/backend
+aws s3 cp s3://lovelu-t3-app/backend/ /opt/backend/ --recursive
+
+python3 -m venv venv
+
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+
+Create systemd service
+
+vi /etc/systemd/system/backend.service
+
+################################3
+
+[Unit]
+Description=FastAPI Backend (Gunicorn/Uvicorn)
+After=network.target
+
+[Service]
+User=ec2-user
+WorkingDirectory=/opt/backend
+ExecStart=/opt/backend/venv/bin/gunicorn -w 2 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 main:app
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
+########################################3
+
+sudo systemctl daemon-reload
+sudo systemctl enable backend
+sudo systemctl start backend
+sudo systemctl status backend --no-pager
+
+sudo journalctl -u backend -f
+

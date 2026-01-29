@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-backend-config
+  namespace: todo
+data:
+  DB_HOST: "mysql"          # Kubernetes service name
+  DB_PORT: "3306"
+  DB_NAME: "three_tier_app"
+  DB_USER: "appuser"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: todo-backend-secret
+  namespace: todo
+type: Opaque
+stringData:
+  DB_PASS: "AppPass123!"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-backend
+  namespace: todo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todo-backend
+  template:
+    metadata:
+      labels:
+        app: todo-backend
+    spec:
+      containers:
+        - name: api
+          image: yourrepo/todo-backend:1.0
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: todo-backend-config
+            - secretRef:
+                name: todo-backend-secret
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-backend-svc
+  namespace: todo
+spec:
+  selector:
+    app: todo-backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8000
+  type: ClusterIP

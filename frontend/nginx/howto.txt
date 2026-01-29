@@ -1,0 +1,23 @@
+
+sudo dnf update -y
+sudo dnf install -y nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
+
+# from your local machine
+scp -i yourkey.pem -r dist/* ec2-user@FRONTEND_EC2_PUBLIC_IP:/tmp/frontend/
+or copy from s3
+
+on fron end ec2
+sudo mkdir -p /var/www/frontend
+ cd /var/www/frontend
+ aws s3 cp s3://lovelu-t3-app/dist/ . --recursive
+
+sudo chown -R nginx:nginx /var/www/frontend
+
+Configure nginx (React SPA + API reverse proxy)
+
+Create: /etc/nginx/conf.d/frontend.conf
+
+vi /etc/nginx/conf.d/frontend.conf
