@@ -123,7 +123,7 @@ spec:
         name: mysql-data
       spec:
         accessModes: ["ReadWriteMany"]   # ✅ NFS supports RWX
-        storageClassName: nfs-class      # ✅ your storageClass
+        storageClassName: nfs-client     # ✅ your storageClass
         resources:
           requests:
             storage: 1Gi
