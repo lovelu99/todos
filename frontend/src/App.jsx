@@ -137,9 +137,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="text-center mt-3 text-white-50 small">
-          Public ALB → Web EC2 (nginx) → Internal ALB → App EC2 (FastAPI) → RDS
-        </div>
+    
       </div>
     </div>
   );

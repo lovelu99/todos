@@ -4,16 +4,16 @@ export default function Header() {
       <div className="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
         <div>
           <span className="badge text-bg-dark rounded-pill px-3 py-2">
-            AWS 3-Tier Demo
+            This is a demo app
           </span>
           <h1 className="display-6 fw-bold mt-3 mb-1">Todo Dashboard</h1>
           <p className="text-secondary mb-0">
-            React (Public ALB) → Nginx proxy → Internal ALB → FastAPI → RDS MySQL
+            
           </p>
         </div>
         <div className="d-flex gap-2">
           <span className="badge text-bg-primary rounded-pill px-3 py-2">
-            Bootstrap UI
+            
           </span>
           <span className="badge text-bg-success rounded-pill px-3 py-2">
             No Docker
