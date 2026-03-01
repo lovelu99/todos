@@ -86,7 +86,7 @@ spec:
                   name: mysql-secret
                   key: MYSQL_PASSWORD
 
-          # ✅ This runs ONLY when /var/lib/mysql is empty (first time PVC is used)
+          # This runs ONLY when /var/lib/mysql is empty (first time PVC is used)
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql
@@ -122,8 +122,8 @@ spec:
     - metadata:
         name: mysql-data
       spec:
-        accessModes: ["ReadWriteMany"]   # ✅ NFS supports RWX
-        storageClassName: nfs-client     # ✅ your storageClass
+        accessModes: ["ReadWriteMany"]   #  NFS supports RWX
+        storageClassName: nfs-client     #  your storageClass
         resources:
           requests:
             storage: 1Gi
